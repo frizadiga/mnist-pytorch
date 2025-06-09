@@ -8,6 +8,7 @@ DATA_DIR = data
 RESULTS_DIR = results
 MAIN_SCRIPT = classifier.py
 INFERENCE_SCRIPT = inference.py
+INFERENCE_URL_SCRIPT = inference_url.sh
 
 # Default target
 .PHONY: help
@@ -24,6 +25,7 @@ help:
 	@echo "  train-cnn      - Train CNN model"
 	@echo "  train-fc       - Train fully connected model"
 	@echo "  inference      - Run inference on custom image"
+	@echo "  inference-url  - Run inference on image from URL"
 	@echo "  test           - Run quick test to verify installation"
 	@echo "  download-data  - Download MNIST dataset"
 	@echo "  lint           - Run code linting"
@@ -101,6 +103,16 @@ inference:
 test:
 	@echo "Running quick test..."
 	$(PYTHON) -c "import torch; import torchvision; print('PyTorch version:', torch.__version__); print('Torchvision version:', torchvision.__version__); print('CUDA available:', torch.cuda.is_available())"
+
+# Test inference from url
+DEF_URL = https://user-images.githubusercontent.com/379372/31909713-d9046856-b7ef-11e7-98fe-8a1e133c0010.png
+.PHONY: inference-url
+inference-url:
+	@echo "Running inference on image from URL..."
+	@read -p "Enter image URL (default: $(DEF_URL)): " URL; \
+	URL=$${URL:-$(DEF_URL)}; \
+	echo "Using URL: $$URL"; \
+	./$(INFERENCE_URL_SCRIPT) "$$URL"
 
 # Download MNIST data
 .PHONY: download-data
