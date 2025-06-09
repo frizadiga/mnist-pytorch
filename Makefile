@@ -3,10 +3,10 @@ PYTHON = python3
 PIP = pip3
 VENV_NAME = venv
 REQUIREMENTS = requirements.txt
-MODEL_FILE = mnist_model.pth
+MODEL_FILE = model.pth
 DATA_DIR = data
 RESULTS_DIR = results
-MAIN_SCRIPT = mnist_classifier.py
+MAIN_SCRIPT = classifier.py
 INFERENCE_SCRIPT = inference.py
 
 # Default target
