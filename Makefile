@@ -229,6 +229,10 @@ status:
 quickstart: setup download-data train-cnn
 	@echo "Quick start complete! CNN model trained and ready."
 
+.PHONY: inspect-model
+inspect-model:
+	./model_inspector.sh
+
 # Production targets
 .PHONY: prod-setup
 prod-setup:

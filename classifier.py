@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -8,11 +10,9 @@ import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Set device
+# 1. Check if CUDA is available and set the device
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 print(f'Using device: {device}')
-
-# 1. Import libraries (already done above)
 
 # 2. Load MNIST using torchvision.datasets
 def load_mnist_data():
@@ -221,7 +221,7 @@ def main():
     
     # Print model architecture
     print(f"\nModel architecture:\n{model}")
-    
+
     # Define loss function and optimizer
     criterion = nn.NLLLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.001)

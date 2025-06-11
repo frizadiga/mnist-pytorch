@@ -1,6 +1,6 @@
 #!/bin/bash
 # Download image from URL and run inference
-# Usage: ./url_predict.sh <image_url>
+# Usage: ./inference_url.sh <image_url>
 
 set -e
 
