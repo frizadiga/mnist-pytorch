@@ -27,4 +27,4 @@ ENV PYTHONPATH=/workspace
 ENV PYTHONUNBUFFERED=1
 
 # Default command
-CMD ["python", "classifier.py"]
+CMD ["python", "train.py"]

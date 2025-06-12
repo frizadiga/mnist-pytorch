@@ -6,7 +6,7 @@ REQUIREMENTS = requirements.txt
 MODEL_FILE = model.pth
 DATA_DIR = data
 RESULTS_DIR = results
-MAIN_SCRIPT = classifier.py
+MAIN_SCRIPT = train.py
 INFERENCE_SCRIPT = inference.py
 INFERENCE_URL_SCRIPT = inference_url.sh
 
@@ -74,23 +74,32 @@ clean-all: clean
 	rm -rf $(VENV_NAME)
 	@echo "Deep clean complete!"
 
-# Train model (interactive)
+# Update symlink to latest model
+.PHONY: update-symlink
+update-symlink:
+	@echo "Updating model symlink..."
+	./sym_model.sh
+
+# Interactive training
 .PHONY: train
 train:
 	@echo "Starting interactive training..."
 	$(PYTHON) $(MAIN_SCRIPT)
+	$(MAKE) update-symlink
 
 # Train CNN model
 .PHONY: train-cnn
 train-cnn:
 	@echo "Training CNN model..."
 	echo "1" | $(PYTHON) $(MAIN_SCRIPT)
+	$(MAKE) update-symlink
 
 # Train FC model
 .PHONY: train-fc
 train-fc:
 	@echo "Training Fully Connected model..."
 	echo "2" | $(PYTHON) $(MAIN_SCRIPT)
+	$(MAKE) update-symlink
 
 # Run inference
 .PHONY: inference

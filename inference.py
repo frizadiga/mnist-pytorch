@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
 
+import os
 import torch
 import torch.nn.functional as F
 import torchvision.transforms as transforms
 from PIL import Image
-import matplotlib.pyplot as plt
 import numpy as np
 import sys
-from classifier import SimpleCNN, TwoLayerFC
+from train import SimpleCNN, TwoLayerFC
 
 def load_model(model_path, model_type='cnn'):
     """Load a trained model"""
@@ -50,14 +50,18 @@ def predict_digit(model, image, device):
     return predicted_digit, confidence, probabilities[0].cpu().numpy()
 
 def main():
-    model_path = 'model.pth'
+    model_path = './models/model_latest.pth'
 
     # Load model
+    # Resolve symlinks to get the actual file path
+    final_model_path = os.path.realpath(model_path)
+    print(f"Loading model from: {final_model_path}")
+
     try:
-        model, device = load_model(model_path, model_type='cnn')
+        model, device = load_model(final_model_path, model_type='cnn')
         print("Model loaded successfully!")
     except FileNotFoundError:
-        print("Model file not found. Please train the model first by running classifier.py")
+        print("Model file not found. Please train the model first by running train.py")
         return
 
     # Get image path from command line or input
@@ -74,6 +78,8 @@ def main():
             # Make prediction
             predicted_digit, confidence, probabilities = predict_digit(model, processed_image, device)
 
+            # Display results
+            print("---")
             print(f"Predicted digit: {predicted_digit}")
             print(f"Confidence: {confidence:.2%}")
 
@@ -82,6 +88,7 @@ def main():
             print("Top 3 predictions:")
             for i, idx in enumerate(top_3_indices):
                 print(f"  {i+1}. Digit {idx}: {probabilities[idx]:.2%}")
+            print("---")
 
         except Exception as e:
             print(f"Error processing image: {e}")

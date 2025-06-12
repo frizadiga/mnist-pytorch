@@ -31,6 +31,6 @@ echo "Running inference..."
 python3 inference.py "$TEMP_FILE"
 
 # Cleanup
-rm -f "$TEMP_FILE"
+rm -rf "$TEMP_DIR"
 
 echo "Done!"
